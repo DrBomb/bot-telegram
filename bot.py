@@ -38,11 +38,15 @@ def cachama(message):
         return
     user = session.query(User).filter(User.id == message.from_user.id).one_or_none()
     if user is None:
-        user = User(id=message.from_user.id)
+        user = User(id=message.from_user.id,username=message.from_user.username)
         session.add(user)
         cachama = Cachama(id=message.from_user.id,total=0,last_call=datetime.datetime.utcfromtimestamp(time.time()-(LAST_CALL_PERIOD+1)))
         session.add(cachama)
         session.flush()
+    if user.username is None:
+        user.username = message.from_user.username
+        session.flush()
+        print user.username, " agregado"
     delta = datetime.datetime.now() - user.cachamas.last_call
     if delta.seconds > LAST_CALL_PERIOD:
         new_cachamas = generate_new_cachamas()
@@ -52,6 +56,7 @@ def cachama(message):
         session.commit()
     else:
         response = random.choice(old_cachama).format(name=message.from_user.first_name,total=user.cachamas.total)
+        session.commit()
         pass
     Session.remove()
     bot.send_message(message.chat.id,response)
