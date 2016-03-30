@@ -56,6 +56,18 @@ def cachama(message):
     Session.remove()
     bot.send_message(message.chat.id,response)
 
+@bot.message_handler(commands=['cachamaranking'])
+def cachamaranking(message):
+    session = Session()
+    if ( message.chat.type == 'private' or message.chat.type == 'channel') and DEBUG == False:
+        return
+    ranking = session.query(Cachama).order_by(Cachama.total.desc())
+    response = "El RANKING CACHAMA va hasta la fecha de hoy:"
+    for x in range(len(response)):
+        response += "#{}! {}\n".format(x+1,response[x])
+    bot.send_message(message.chat.id,response)
+
+
 def new_user(id_new):
     user = User(id=id_new)
     session.add(user)
