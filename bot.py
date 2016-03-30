@@ -68,7 +68,7 @@ def cachamaranking(message):
         return
     ranking = session.query(Cachama).order_by(Cachama.total.desc())
     response = "El RANKING CACHAMA va hasta la fecha de hoy:"
-    for x in range(len(response)):
+    for x in range(len(ranking)):
         response += "#{}! {}\n".format(x+1,response[x])
     bot.send_message(message.chat.id,response)
 
