@@ -2,6 +2,7 @@ from sqlalchemy import create_engine, MetaData, Table, Column, Integer, String, 
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import relationship, sessionmaker, scoped_session
 from cachama_templates import new_cachama, old_cachama
+from sin_clases_templates import starting_string, middle_string, final_string
 import telebot, random, datetime, time
 
 DEBUG = True
@@ -72,6 +73,9 @@ def cachamaranking(message):
         response += "#{} {}\n".format(x+1,ranking[x].user.username)
     bot.send_message(message.chat.id,response)
 
+@bot.message_handler(commands=['nohayclases'])
+def nohayclases(message):
+    bot.send_message(message.chat.id,random.choice(starting_string)+random.choice(middle_string)+random.choice(final_string))
 
 def new_user(id_new):
     user = User(id=id_new)
