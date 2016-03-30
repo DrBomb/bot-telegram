@@ -69,7 +69,7 @@ def cachamaranking(message):
     ranking = session.query(Cachama).order_by(Cachama.total.desc()).all()
     response = "El RANKING CACHAMA!!! \n"
     for x in range(len(ranking)):
-        response += "#{}! {}\n".format(x+1,ranking[x].user.username)
+        response += "#{} {}\n".format(x+1,ranking[x].user.username)
     bot.send_message(message.chat.id,response)
 
 
