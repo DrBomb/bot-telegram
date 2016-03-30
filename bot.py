@@ -66,10 +66,10 @@ def cachamaranking(message):
     session = Session()
     if ( message.chat.type == 'private' or message.chat.type == 'channel') and DEBUG == False:
         return
-    ranking = session.query(Cachama).order_by(Cachama.total.desc())
-    response = "El RANKING CACHAMA va hasta la fecha de hoy:"
+    ranking = session.query(Cachama).order_by(Cachama.total.desc()).all()
+    response = "El RANKING CACHAMA!!! \n"
     for x in range(len(ranking)):
-        response += "#{}! {}\n".format(x+1,response[x])
+        response += "#{}! {}\n".format(x+1,ranking[x].user.username)
     bot.send_message(message.chat.id,response)
 
 
