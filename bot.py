@@ -35,7 +35,7 @@ def startMessage(message):
 @bot.message_handler(commands=['cachama','cachamas'])
 def cachama(message):
     session = Session()
-    if (message.chat.type == 'private' or message.chat.type == 'channel') and DEBUG == False:
+    if (message.chat.type != 'private'):
         return
     user = session.query(User).filter(User.id == message.from_user.id).one_or_none()
     if user is None:
